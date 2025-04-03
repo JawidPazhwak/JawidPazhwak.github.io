@@ -1,0 +1,12 @@
+[
+    {
+        "title": "Project 1",
+        "description": "A cool password generator using python.",
+        "link": "http://example.com"
+    },
+    {
+        "title": "Project 2",
+        "description": "A simple calculator using python.",
+        "link": "http://example2.com"
+    }
+] 
