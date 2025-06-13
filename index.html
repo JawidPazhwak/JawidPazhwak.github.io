@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="Jawid Pazhwak's Portfolio - CSE Enthusiast">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Jawid Pazhwak - Portfolio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+
+<body>
+    <!-- Matrix Background -->
+    <canvas id="matrix-bg"></canvas>
+
+    <!-- Background Video -->
+    <video autoplay loop muted id="background-video">
+        <source src="computer-components.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand neon-text" href="index.html">Portfolio</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active neon-text" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link neon-text" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link neon-text" href="#skills">Skills</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link neon-text" href="#projects">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link neon-text" href="music.html">Music</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link neon-text" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mt-4">
+        <!-- Header Section -->
+        <header class="text-center mb-5">
+            <h1 class="typing neon-text">Jawid Pazhwak</h1>
+            <p class="glitch neon-text">CSE Enthusiast</p>
+        </header>
+
+        <!-- About Section -->
+        <section id="about" class="mb-5">
+            <h2 class="section-title neon-text">About Me</h2>
+            <div class="about-content">
+                <p class="glitch neon-text">I'm a CSE student passionate about technology and coding.</p>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="mb-5">
+            <h2 class="section-title neon-text">Skills</h2>
+            <div class="skills-content">
+                <ul id="skills-list" class="row">
+                    <!-- Skills will be loaded from skills.json -->
+                </ul>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="mb-5">
+            <h2 class="section-title neon-text">Projects</h2>
+            <div id="projects-list" class="row g-4">
+                <!-- Projects will be loaded from projects.json -->
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="mb-5">
+            <h2 class="section-title neon-text">Contact</h2>
+            <div class="contact-content">
+                <form id="contact-form" class="mx-auto" style="max-width: 500px;">
+                    <div class="mb-3">
+                        <input type="text" class="form-control neon-input" placeholder="Name" aria-label="Name" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="email" class="form-control neon-input" placeholder="Email" aria-label="Email" required>
+                    </div>
+                    <div class="mb-3">
+                        <textarea class="form-control neon-input" placeholder="Message" aria-label="Message" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="button w-100">Send</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="static/js/main.js"></script>
+    <script>
+        // Matrix Background
+        const canvas = document.getElementById('matrix-bg');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()';
+        const fontSize = Math.max(10, Math.min(14, window.innerWidth / 50));
+        const columns = Math.floor(canvas.width / fontSize);
+
+        const drops = [];
+        for (let i = 0; i < columns; i++) {
+            drops[i] = {
+                y: Math.random() * -100,
+                speed: Math.random() * 2 + 1,
+                color: Math.random() > 0.5 ? '#0F0' : '#0FF'
+            };
+        }
+
+        function draw() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = characters.charAt(Math.floor(Math.random() * characters.length));
+                ctx.fillStyle = drops[i].color;
+                ctx.font = fontSize + 'px monospace';
+                ctx.fillText(text, i * fontSize, drops[i].y * fontSize);
+
+                if (drops[i].y * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i].y = 0;
+                    drops[i].color = Math.random() > 0.5 ? '#0F0' : '#0FF';
+                    drops[i].speed = Math.random() * 2 + 1;
+                }
+                drops[i].y += drops[i].speed;
+            }
+        }
+
+        setInterval(draw, 33);
+
+        // Load skills and projects
+        fetch('skills.json')
+            .then(response => response.json())
+            .then(skills => {
+                const skillsList = document.getElementById('skills-list');
+                skills.forEach(skill => {
+                    const li = document.createElement('li');
+                    li.className = 'col-6 col-md-4 col-lg-3 mb-3 neon-text';
+                    li.textContent = skill;
+                    skillsList.appendChild(li);
+                });
+            });
+
+        fetch('projects.json')
+            .then(response => response.json())
+            .then(projects => {
+                const projectsList = document.getElementById('projects-list');
+                projects.forEach(project => {
+                    const col = document.createElement('div');
+                    col.className = 'col-12 col-md-6 col-lg-4';
+                    col.innerHTML = `
+                        <div class="project-card h-100">
+                            <h5 class="neon-text">${project.title}</h5>
+                            <p class="neon-text">${project.description}</p>
+                            <a href="${project.link}" class="button w-100" target="_blank" rel="noopener noreferrer">View Project</a>
+                        </div>
+                    `;
+                    projectsList.appendChild(col);
+                });
+            });
+
+        // Handle form submission
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Add your form submission logic here
+            alert('Thank you for your message! I will get back to you soon.');
+            this.reset();
+        });
+    </script>
+</body>
+
+</html>

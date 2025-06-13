@@ -1,0 +1,17 @@
+[
+    {
+        "title": "Portfolio Website",
+        "description": "A responsive portfolio website with matrix rain background, music player, and interactive elements.",
+        "link": "https://github.com/yourusername/portfolio"
+    },
+    {
+        "title": "Music Player",
+        "description": "A web-based music player with streaming capabilities and social features.",
+        "link": "https://github.com/yourusername/music-player"
+    },
+    {
+        "title": "Project 3",
+        "description": "Description of your third project.",
+        "link": "https://github.com/yourusername/project3"
+    }
+] 

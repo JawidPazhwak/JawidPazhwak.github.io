@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="Music Portfolio - Jawid Pazhwak">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>My Music - Portfolio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+    <!-- Matrix Background -->
+    <canvas id="matrix-bg"></canvas>
+
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand neon-text" href="index.html">Portfolio</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link neon-text" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link neon-text" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active neon-text" href="music.html">Music</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mt-4">
+        <h1 class="section-title neon-text">My Music</h1>
+        
+        <div class="row g-4">
+            <!-- Example Music Track 1 -->
+            <div class="col-12 col-md-6">
+                <div class="music-track">
+                    <h5 class="neon-text">Track Title 1</h5>
+                    <h6 class="neon-text">Artist Name</h6>
+                    <p class="neon-text">Description of the track goes here.</p>
+                    
+                    <div class="audio-player mb-3">
+                        <audio controls class="w-100" preload="none" controlsList="nodownload">
+                            <source src="static/uploads/audio/track1.mp3" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="like-section">
+                            <button class="button like-btn" data-track-id="track1">
+                                <i class="fas fa-heart"></i> <span class="like-count">0</span>
+                            </button>
+                        </div>
+                        <small class="neon-text">Uploaded on 2024-03-13</small>
+                    </div>
+
+                    <div class="comments-section mt-3">
+                        <h6 class="neon-text">Comments</h6>
+                        <form class="comment-form mb-3" data-track-id="track1">
+                            <div class="input-group">
+                                <input type="text" class="form-control neon-input" placeholder="Add a comment..." required>
+                                <button type="submit" class="button">Post</button>
+                            </div>
+                        </form>
+                        <div class="comments-list" data-track-id="track1">
+                            <!-- Comments will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example Music Track 2 -->
+            <div class="col-12 col-md-6">
+                <div class="music-track">
+                    <h5 class="neon-text">Track Title 2</h5>
+                    <h6 class="neon-text">Artist Name</h6>
+                    <p class="neon-text">Description of the track goes here.</p>
+                    
+                    <div class="audio-player mb-3">
+                        <audio controls class="w-100" preload="none" controlsList="nodownload">
+                            <source src="static/uploads/audio/track2.mp3" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="like-section">
+                            <button class="button like-btn" data-track-id="track2">
+                                <i class="fas fa-heart"></i> <span class="like-count">0</span>
+                            </button>
+                        </div>
+                        <small class="neon-text">Uploaded on 2024-03-13</small>
+                    </div>
+
+                    <div class="comments-section mt-3">
+                        <h6 class="neon-text">Comments</h6>
+                        <form class="comment-form mb-3" data-track-id="track2">
+                            <div class="input-group">
+                                <input type="text" class="form-control neon-input" placeholder="Add a comment..." required>
+                                <button type="submit" class="button">Post</button>
+                            </div>
+                        </form>
+                        <div class="comments-list" data-track-id="track2">
+                            <!-- Comments will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize matrix background
+            const canvas = document.getElementById('matrix-bg');
+            const ctx = canvas.getContext('2d');
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()';
+            const fontSize = Math.max(10, Math.min(14, window.innerWidth / 50));
+            const columns = Math.floor(canvas.width / fontSize);
+
+            const drops = [];
+            for (let i = 0; i < columns; i++) {
+                drops[i] = {
+                    y: Math.random() * -100,
+                    speed: Math.random() * 2 + 1,
+                    color: Math.random() > 0.5 ? '#0F0' : '#0FF'
+                };
+            }
+
+            function draw() {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                for (let i = 0; i < drops.length; i++) {
+                    const text = characters.charAt(Math.floor(Math.random() * characters.length));
+                    ctx.fillStyle = drops[i].color;
+                    ctx.font = fontSize + 'px monospace';
+                    ctx.fillText(text, i * fontSize, drops[i].y * fontSize);
+
+                    if (drops[i].y * fontSize > canvas.height && Math.random() > 0.975) {
+                        drops[i].y = 0;
+                        drops[i].color = Math.random() > 0.5 ? '#0F0' : '#0FF';
+                        drops[i].speed = Math.random() * 2 + 1;
+                    }
+                    drops[i].y += drops[i].speed;
+                }
+            }
+
+            setInterval(draw, 33);
+
+            // Prevent right-click and keyboard shortcuts on audio elements
+            document.querySelectorAll('audio').forEach(audio => {
+                audio.addEventListener('contextmenu', e => e.preventDefault());
+                audio.addEventListener('keydown', e => {
+                    if (e.ctrlKey || e.keyCode === 67 || e.keyCode === 86) {
+                        e.preventDefault();
+                    }
+                });
+            });
+
+            // Handle likes
+            document.querySelectorAll('.like-btn').forEach(button => {
+                const trackId = button.dataset.trackId;
+                const likeCount = button.querySelector('.like-count');
+                
+                // Load saved likes
+                const savedLikes = localStorage.getItem(`likes_${trackId}`) || '0';
+                likeCount.textContent = savedLikes;
+                
+                if (localStorage.getItem(`liked_${trackId}`) === 'true') {
+                    button.classList.add('active');
+                }
+
+                button.addEventListener('click', function() {
+                    const currentCount = parseInt(likeCount.textContent);
+                    if (this.classList.contains('active')) {
+                        likeCount.textContent = currentCount - 1;
+                        this.classList.remove('active');
+                        localStorage.setItem(`liked_${trackId}`, 'false');
+                        localStorage.setItem(`likes_${trackId}`, (currentCount - 1).toString());
+                    } else {
+                        likeCount.textContent = currentCount + 1;
+                        this.classList.add('active');
+                        localStorage.setItem(`liked_${trackId}`, 'true');
+                        localStorage.setItem(`likes_${trackId}`, (currentCount + 1).toString());
+                    }
+                });
+            });
+
+            // Handle comments
+            document.querySelectorAll('.comment-form').forEach(form => {
+                const trackId = form.dataset.trackId;
+                const commentsList = document.querySelector(`.comments-list[data-track-id="${trackId}"]`);
+                
+                // Load saved comments
+                const savedComments = JSON.parse(localStorage.getItem(`comments_${trackId}`) || '[]');
+                savedComments.forEach(comment => {
+                    addCommentToDOM(commentsList, comment);
+                });
+
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const input = this.querySelector('input');
+                    const comment = {
+                        text: input.value,
+                        date: new Date().toLocaleString(),
+                        id: Date.now()
+                    };
+
+                    // Save comment
+                    const comments = JSON.parse(localStorage.getItem(`comments_${trackId}`) || '[]');
+                    comments.push(comment);
+                    localStorage.setItem(`comments_${trackId}`, JSON.stringify(comments));
+
+                    // Add to DOM
+                    addCommentToDOM(commentsList, comment);
+                    input.value = '';
+                });
+            });
+
+            function addCommentToDOM(container, comment) {
+                const commentElement = document.createElement('div');
+                commentElement.className = 'comment mb-2';
+                commentElement.innerHTML = `
+                    <div class="d-flex justify-content-between">
+                        <strong class="neon-text">Anonymous</strong>
+                        <small class="neon-text">${comment.date}</small>
+                    </div>
+                    <p class="mb-0 neon-text">${comment.text}</p>
+                `;
+                container.appendChild(commentElement);
+            }
+        });
+    </script>
+</body>
+</html> 

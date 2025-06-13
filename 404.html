@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#000000">
+    <title>404 - Page Not Found</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+    <!-- Matrix Background -->
+    <canvas id="matrix-bg"></canvas>
+
+    <div class="container d-flex align-items-center justify-content-center" style="min-height: 100vh;">
+        <div class="text-center">
+            <h1 class="display-1 neon-text mb-4">404</h1>
+            <h2 class="neon-text mb-4">Page Not Found</h2>
+            <p class="neon-text mb-4">The page you're looking for doesn't exist or has been moved.</p>
+            <a href="index.html" class="button">Return Home</a>
+        </div>
+    </div>
+
+    <script>
+        // Matrix Background
+        const canvas = document.getElementById('matrix-bg');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()';
+        const fontSize = Math.max(10, Math.min(14, window.innerWidth / 50));
+        const columns = Math.floor(canvas.width / fontSize);
+
+        const drops = [];
+        for (let i = 0; i < columns; i++) {
+            drops[i] = {
+                y: Math.random() * -100,
+                speed: Math.random() * 2 + 1,
+                color: Math.random() > 0.5 ? '#0F0' : '#0FF'
+            };
+        }
+
+        function draw() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = characters.charAt(Math.floor(Math.random() * characters.length));
+                ctx.fillStyle = drops[i].color;
+                ctx.font = fontSize + 'px monospace';
+                ctx.fillText(text, i * fontSize, drops[i].y * fontSize);
+
+                if (drops[i].y * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i].y = 0;
+                    drops[i].color = Math.random() > 0.5 ? '#0F0' : '#0FF';
+                    drops[i].speed = Math.random() * 2 + 1;
+                }
+                drops[i].y += drops[i].speed;
+            }
+        }
+
+        setInterval(draw, 33);
+    </script>
+</body>
+</html> 
