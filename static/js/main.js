@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await response.json();
             console.log('Projects loaded:', data);
 
-        const projectsList = document.getElementById('projects-list');
+            const projectsList = document.getElementById('projects-list');
             if (!projectsList) {
                 throw new Error('Projects list element not found');
             }
@@ -21,16 +21,16 @@ document.addEventListener('DOMContentLoaded', () => {
             projectsList.innerHTML = '';
             if (Array.isArray(data)) {
                 data.forEach((project, index) => {
-            const div = document.createElement('div');
-            div.className = 'project-card';
+                    const div = document.createElement('div');
+                    div.className = 'project-card';
                     div.style.animationDelay = `${index * 0.2}s`;
-            div.innerHTML = `
-                <h3>${project.title}</h3>
-                <p>${project.description}</p>
-                <a href="${project.link}" target="_blank">Visit</a>
-            `;
-            projectsList.appendChild(div);
-        });
+                    div.innerHTML = `
+                        <h3>${project.title}</h3>
+                        <p>${project.description}</p>
+                        <a href="${project.link}" target="_blank">Visit</a>
+                    `;
+                    projectsList.appendChild(div);
+                });
             } else {
                 throw new Error('Projects data is not an array');
             }
@@ -47,6 +47,141 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     };
+
+    // Load Audio Files
+    const loadAudioFiles = async () => {
+        try {
+            const response = await fetch('static/uploads/audio/');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(data, 'text/html');
+            const files = Array.from(doc.querySelectorAll('a'))
+                .map(a => a.href)
+                .filter(href => href.match(/\.(mp3|wav)$/i));
+
+            const musicContainer = document.querySelector('.row.g-4');
+            if (!musicContainer) return;
+
+            musicContainer.innerHTML = ''; // Clear existing content
+
+            files.forEach((file, index) => {
+                const fileName = file.split('/').pop().replace(/\.[^/.]+$/, '');
+                const trackId = `track-${index + 1}`;
+                
+                const trackElement = document.createElement('div');
+                trackElement.className = 'col-12 col-md-6';
+                trackElement.innerHTML = `
+                    <div class="music-track">
+                        <h5 class="neon-text">${fileName}</h5>
+                        <h6 class="neon-text">Original Composition</h6>
+                        <p class="neon-text">A unique musical piece showcasing creative sound design.</p>
+                        
+                        <div class="audio-player mb-3">
+                            <audio controls class="w-100" preload="none" controlsList="nodownload">
+                                <source src="${file}" type="audio/${file.endsWith('.wav') ? 'wav' : 'mpeg'}">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="like-section">
+                                <button class="button like-btn" data-track-id="${trackId}">
+                                    <i class="fas fa-heart"></i> <span class="like-count">0</span>
+                                </button>
+                            </div>
+                            <small class="neon-text">Uploaded on ${new Date().toISOString().split('T')[0]}</small>
+                        </div>
+
+                        <div class="comments-section mt-3">
+                            <h6 class="neon-text">Comments</h6>
+                            <form class="comment-form mb-3" data-track-id="${trackId}">
+                                <div class="input-group">
+                                    <input type="text" class="form-control neon-input" placeholder="Add a comment..." required>
+                                    <button type="submit" class="button">Post</button>
+                                </div>
+                            </form>
+                            <div class="comments-list" data-track-id="${trackId}">
+                                <!-- Comments will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                `;
+                musicContainer.appendChild(trackElement);
+            });
+
+            // Initialize like buttons and comments for new tracks
+            initializeTrackInteractions();
+        } catch (error) {
+            console.error('Error loading audio files:', error);
+        }
+    };
+
+    // Initialize track interactions (likes and comments)
+    const initializeTrackInteractions = () => {
+        // Handle likes
+        document.querySelectorAll('.like-btn').forEach(button => {
+            const trackId = button.dataset.trackId;
+            const likeCount = button.querySelector('.like-count');
+            
+            // Load saved likes
+            const savedLikes = localStorage.getItem(`likes_${trackId}`) || '0';
+            likeCount.textContent = savedLikes;
+            
+            if (localStorage.getItem(`liked_${trackId}`) === 'true') {
+                button.classList.add('active');
+            }
+
+            button.addEventListener('click', function() {
+                const currentCount = parseInt(likeCount.textContent);
+                if (this.classList.contains('active')) {
+                    likeCount.textContent = currentCount - 1;
+                    this.classList.remove('active');
+                    localStorage.setItem(`liked_${trackId}`, 'false');
+                    localStorage.setItem(`likes_${trackId}`, (currentCount - 1).toString());
+                } else {
+                    likeCount.textContent = currentCount + 1;
+                    this.classList.add('active');
+                    localStorage.setItem(`liked_${trackId}`, 'true');
+                    localStorage.setItem(`likes_${trackId}`, (currentCount + 1).toString());
+                }
+            });
+        });
+
+        // Handle comments
+        document.querySelectorAll('.comment-form').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const trackId = this.dataset.trackId;
+                const input = this.querySelector('input');
+                const comment = input.value.trim();
+                
+                if (comment) {
+                    const commentsList = document.querySelector(`.comments-list[data-track-id="${trackId}"]`);
+                    const commentElement = document.createElement('div');
+                    commentElement.className = 'comment';
+                    commentElement.innerHTML = `
+                        <p class="neon-text">${comment}</p>
+                        <small class="neon-text">${new Date().toLocaleString()}</small>
+                    `;
+                    commentsList.appendChild(commentElement);
+                    input.value = '';
+                }
+            });
+        });
+    };
+
+    // Load audio files if we're on the music page
+    if (document.querySelector('.music-track')) {
+        loadAudioFiles();
+    }
+
+    // Load projects if we're on the main page
+    if (document.getElementById('projects-list')) {
+        loadProjects();
+    }
 
     // Load Skills
     const loadSkills = async () => {
@@ -87,7 +222,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Initialize loading
-    loadProjects();
     loadSkills();
 
     // Form handling
