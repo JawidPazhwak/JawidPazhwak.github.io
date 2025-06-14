@@ -1,0 +1,130 @@
+{
+    "tracks": [
+        {
+            "name": "Project 1",
+            "file": "Project_1.mp3",
+            "type": "mp3",
+            "description": "A unique musical piece showcasing creative sound design."
+        },
+        {
+            "name": "Project 2",
+            "file": "Project_2.mp3",
+            "type": "mp3",
+            "description": "Another creative piece exploring different musical elements."
+        },
+        {
+            "name": "Project 3",
+            "file": "Project_3.mp3",
+            "type": "mp3",
+            "description": "An innovative composition blending electronic and acoustic elements."
+        },
+        {
+            "name": "Project 4",
+            "file": "Project_4.mp3",
+            "type": "mp3",
+            "description": "A dynamic track featuring rich textures and rhythmic patterns."
+        },
+        {
+            "name": "Project 5",
+            "file": "Project_5.mp3",
+            "type": "mp3",
+            "description": "An experimental piece exploring unique soundscapes."
+        },
+        {
+            "name": "Project 6",
+            "file": "Project_6.mp3",
+            "type": "mp3",
+            "description": "A melodic journey through various musical landscapes."
+        },
+        {
+            "name": "Project 7",
+            "file": "Project_7.mp3",
+            "type": "mp3",
+            "description": "A rhythmic composition with intricate layering."
+        },
+        {
+            "name": "Project 8",
+            "file": "Project_8.mp3",
+            "type": "mp3",
+            "description": "An atmospheric track with deep emotional resonance."
+        },
+        {
+            "name": "Project 9",
+            "file": "Project_9.mp3",
+            "type": "mp3",
+            "description": "A bold musical statement with powerful dynamics."
+        },
+        {
+            "name": "Project 10",
+            "file": "Project_10.mp3",
+            "type": "mp3",
+            "description": "A minimalist composition focusing on subtle nuances."
+        },
+        {
+            "name": "Project 11",
+            "file": "Project_11.mp3",
+            "type": "mp3",
+            "description": "An energetic piece with driving rhythms."
+        },
+        {
+            "name": "Project 12",
+            "file": "Project_12.mp3",
+            "type": "mp3",
+            "description": "A contemplative track exploring ambient textures."
+        },
+        {
+            "name": "Project 13",
+            "file": "Project_13.mp3",
+            "type": "mp3",
+            "description": "A fusion of traditional and modern musical elements."
+        },
+        {
+            "name": "Project 14",
+            "file": "Project_14.mp3",
+            "type": "mp3",
+            "description": "An innovative composition with unique sound design."
+        },
+        {
+            "name": "Project 15",
+            "file": "Project_15.mp3",
+            "type": "mp3",
+            "description": "A dynamic piece with evolving musical themes."
+        },
+        {
+            "name": "Project 16",
+            "file": "Project_16.mp3",
+            "type": "mp3",
+            "description": "A rhythmic exploration with complex patterns."
+        },
+        {
+            "name": "Project 17",
+            "file": "Project_17.mp3",
+            "type": "mp3",
+            "description": "An atmospheric journey through sound."
+        },
+        {
+            "name": "Project 18",
+            "file": "Project_18.mp3",
+            "type": "mp3",
+            "description": "A melodic composition with rich harmonies."
+        },
+        {
+            "name": "Project 19",
+            "file": "Project_19.mp3",
+            "type": "mp3",
+            "description": "An experimental track pushing musical boundaries."
+        },
+        {
+            "name": "Project 20",
+            "file": "Project_20.mp3",
+            "type": "mp3",
+            "description": "A powerful musical statement with bold arrangements."
+        },
+        {
+            "name": "Untitled",
+            "file": "untitled.mp3",
+            "type": "mp3",
+            "description": "A unique musical exploration waiting to be named."
+        }
+    ]
+} 
