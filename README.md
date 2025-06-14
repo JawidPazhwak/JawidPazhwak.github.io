@@ -25,35 +25,6 @@ A modern, responsive portfolio website featuring a matrix rain background effect
 
 Visit the live portfolio at: [Your GitHub Pages URL]
 
-## Local Development
-
-1. Clone the repository:
-```bash
-git clone https://github.com/yourusername/portfolio.git
-```
-
-2. Navigate to the project directory:
-```bash
-cd portfolio
-```
-
-3. Open `index.html` in your browser or use a local server:
-```bash
-python -m http.server 8000
-```
-
-4. Visit `http://localhost:8000` in your browser
-
-## Deployment
-
-This portfolio is designed to be hosted on GitHub Pages. To deploy:
-
-1. Push your code to GitHub
-2. Go to your repository settings
-3. Navigate to "Pages" in the sidebar
-4. Select the main branch as the source
-5. Your site will be published at `https://yourusername.github.io/portfolio`
-
 ## Customization
 
 - Edit `index.html` to update your personal information
@@ -64,7 +35,7 @@ This portfolio is designed to be hosted on GitHub Pages. To deploy:
 
 ## License
 
-This project is open source and available under the [MIT License](LICENSE).
+All Rights Reserved.
 
 ## Contact
 
